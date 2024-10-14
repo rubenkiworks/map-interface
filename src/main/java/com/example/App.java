@@ -1,9 +1,11 @@
 package com.example;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 /**
@@ -129,5 +131,35 @@ public class App {
             });
 
         });
+
+        /* Los mapas se trabajan con la clase HashMap que no permite ordenamiento, y al final
+        * si queremos ordenar las claves del mapa, se copia la coleccion a un TreeMap, que si 
+        * permite ordenamiento
+         */
+        Map<String, Double> personasSalario = personas.stream()
+                .collect(Collectors.groupingBy(persona -> persona.getNombre(),
+                        Collectors.summingDouble(persona -> persona.getSalario())));
+
+        Map<String, Double> salariosOrdenados = new TreeMap<>();
+        salariosOrdenados.putAll(personasSalario);
+
+        System.out.println("Salarios ordenados " + salariosOrdenados);
+
+        Map<String, Double> salariosOrdenadosAlReves = new TreeMap<>(Collections.reverseOrder());
+        salariosOrdenadosAlReves.putAll(personasSalario);
+
+        // Punto 3
+// Variante # 1
+        Map<String, Double> salariosPorNombreOrdenInverso = new TreeMap<>((nombre1, nombre2) -> nombre2.compareTo(nombre1));
+
+        System.out.println("Salarios Ordenados por Nombre en orden inverso");
+        salariosPorNombreOrdenInverso.putAll(personasSalario);
+        System.out.println(salariosPorNombreOrdenInverso);
+
+// Variante # 2. Ivan
+        var salariosPorNombreOrdenadoInversamente = new TreeMap<>(Collections.reverseOrder());
+        System.out.println("Solucion de Ivan");
+        salariosPorNombreOrdenadoInversamente.putAll(personasSalario);
+        System.out.println(salariosPorNombreOrdenadoInversamente);
     }
 }
