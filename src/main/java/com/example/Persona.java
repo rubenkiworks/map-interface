@@ -2,6 +2,7 @@ package com.example;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,5 +118,9 @@ public class Persona implements Comparable<Persona>{
 
         return cmpPrimerApellido != 0 ? cmpPrimerApellido : 
                        cmpSegundoApellido != 0 ? cmpSegundoApellido : cmpNombre;
+    }
+
+    public Long edad(){
+        return ChronoUnit.YEARS.between(fechaNacimiento, LocalDate.now());
     }
 }
